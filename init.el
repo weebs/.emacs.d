@@ -30,3 +30,18 @@
 
 ;; Load Path
 ;(add-to-list 'load-path "~/.emacs.d/somefolder")
+
+;; ========== Misc ==========
+;; Changes all yes/no questions to y/n type
+(fset 'yes-or-no-p 'y-or-n-p)
+;; Go straight to scratch buffer on startup
+(setq inhibit-startup-message t)
+
+;; ========== Editing ==========
+(setq-default indent-tabs-mode nil)
+;; Highlight matching parens
+(show-paren-mode 1)
+;; Go to last cursor position when file was open
+(setq save-place-file "~/.emacs.d/saveplace")
+(require 'saveplace)
+(setq-default save-place t)
