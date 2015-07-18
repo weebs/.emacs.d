@@ -6,7 +6,9 @@
 (package-initialize)
 
 (defvar my-packages
-  '(rainbow-delimiters))
+  '(rainbow-delimiters
+    cider
+    paredit))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -25,6 +27,8 @@
 
 ; Enable Rainbow Delimiters in all programming related modes
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+;; Enable paredit for Clojure
+(add-hook 'clojure-mode-hook 'enable-paredit-mode)
 ;; To create the hook for specific modes, see the following
 ;(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 
@@ -45,3 +49,45 @@
 (setq save-place-file "~/.emacs.d/saveplace")
 (require 'saveplace)
 (setq-default save-place t)
+
+;; Color Themes
+;; Read http://batsov.com/articles/2012/02/19/color-theming-in-emacs-reloaded/
+;; for a great explanation of emacs color themes.
+;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Custom-Themes.html
+;; for a more technical explanation.
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+(add-to-list 'load-path "~/.emacs.d/themes")
+;(load-theme 'tomorrow-night-bright t)
+(load-theme 'monokai t)
+
+(setq c-default-style "linux"
+      c-basic-offset 4)
+
+;; Rust Stuff/Autocomplete
+(add-hook 'rust-mode-hook
+          '(lambda ()
+             (racer-activate)
+             (local-set-key (kbd "M-.") #'racer-find-definition)
+             (local-set-key (kbd "TAB") #'racer-complete-or-indent)))
+
+;; Line Numbers
+(global-linum-mode)
+
+
+
+
+;;;; ========== Auto Generated ==========
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("d9046dcd38624dbe0eb84605e77d165e24fdfca3a40c3b13f504728bab0bf99d" default))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
