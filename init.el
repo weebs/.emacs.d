@@ -23,7 +23,10 @@
   (when (not (package-installed-p p))
     (package-install p)))
 
-(require 'rainbow-delimiters)
+; Enable Rainbow Delimiters in all programming related modes
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+;; To create the hook for specific modes, see the following
+;(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 
 ;; Load Path
 ;(add-to-list 'load-path "~/.emacs.d/somefolder")
