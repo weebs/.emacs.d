@@ -44,8 +44,9 @@
     (package-install p)))
 
 (require 'fsharp-mode)
-(setq inferior-fsharp-program "/usr/local/bin/fsharpi --readline-")
-(setq fsharp-compiler "/usr/local/bin/fsharpc")
+(if (eq system-type 'darwin)
+    (setq inferior-fsharp-program "/usr/local/bin/fsharpi --readline-")
+    (setq fsharp-compiler "/usr/local/bin/fsharpc"))
 
 (add-hook 'fsharp-mode-hook
  (lambda ()
