@@ -12,3 +12,5 @@ elpa/
 elpa
 saveplace
 ac-comphist.dat
+eshell
+eshell/
