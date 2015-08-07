@@ -109,3 +109,10 @@
 ;; Add Homebrew Binaries to path
 ;(setenv "PATH" (concat (getenv "PATH") ":/sw/bin"))
 (setq exec-path (append exec-path '("/usr/local/bin")))
+
+;; Rust Stuff/Autocomplete
+; (add-hook 'rust-mode-hook
+;           '(lambda ()
+;              (racer-activate)
+;              (local-set-key (kbd "M-.") #'racer-find-definition)
+;              (local-set-key (kbd "TAB") #'racer-complete-or-indent)))
