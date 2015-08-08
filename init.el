@@ -125,3 +125,13 @@
 ;              (racer-activate)
 ;              (local-set-key (kbd "M-.") #'racer-find-definition)
 ;              (local-set-key (kbd "TAB") #'racer-complete-or-indent)))
+
+    ;; scroll one line at a time (less "jumpy" than defaults)
+
+(defun set-smooth-scrolling (amt)
+  (setq mouse-wheel-scroll-amount '(amt ((shift) . amt))) ;; one line at a time
+  (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+  (setq mouse-wheel-follow-mouse 't) ;; scroll window under mouse
+  (setq scroll-step amt)) ;; keyboard scroll one line at a time
+;; Todo: The parameter doesn't seem to do anything
+(set-smooth-scrolling 1)
