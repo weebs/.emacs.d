@@ -23,10 +23,18 @@
 (package-initialize)
 (package-refresh-contents)
 (defvar my-packages
-  '(rainbow-delimiters
+  '(nyan-mode
+    nyan-prompt
+    rainbow-delimiters
     cider
     paredit
     fsharp-mode))
+
+;; Super important stuff.
+(nyan-mode)
+(nyan-start-animation)
+;(nyan-start-music)
+(add-hook 'eshell-load-hook 'nyan-prompt-enable)
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -45,8 +53,8 @@
 
 (require 'fsharp-mode)
 (if (eq system-type 'darwin)
-    (setq inferior-fsharp-program "/usr/local/bin/fsharpi --readline-")
-    (setq fsharp-compiler "/usr/local/bin/fsharpc"))
+    (progn (setq inferior-fsharp-program "/usr/local/bin/fsharpi --readline-")
+           (setq fsharp-compiler "/usr/local/bin/fsharpc")))
 
 (add-hook 'fsharp-mode-hook
  (lambda ()
