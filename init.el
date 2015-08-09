@@ -28,13 +28,8 @@
     rainbow-delimiters
     cider
     paredit
-    fsharp-mode))
-
-;; Super important stuff.
-(nyan-mode)
-(nyan-start-animation)
-;(nyan-start-music)
-(add-hook 'eshell-load-hook 'nyan-prompt-enable)
+    ;fsharp-mode
+    ))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -50,6 +45,14 @@
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
+
+;; ========== Initialize Stuff ==========
+
+;; Todo: Add conditional so I don't run this shit on nox servers
+(nyan-mode)
+(nyan-start-animation)
+;(nyan-start-music)
+(add-hook 'eshell-load-hook 'nyan-prompt-enable)
 
 (require 'fsharp-mode)
 (if (eq system-type 'darwin)
