@@ -6,7 +6,7 @@
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("d9046dcd38624dbe0eb84605e77d165e24fdfca3a40c3b13f504728bab0bf99d" default))))
+    ("05c3bc4eb1219953a4f182e10de1f7466d28987f48d647c01f1f0037ff35ab9a" "d9046dcd38624dbe0eb84605e77d165e24fdfca3a40c3b13f504728bab0bf99d" default))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -14,6 +14,9 @@
  ;; If there is more than one, they won't work right.
  )
 
+
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(global-set-key "\C-x\C-m" 'execute-extended-command)
 
 (require 'package)
 (add-to-list
@@ -28,8 +31,9 @@
     rainbow-delimiters
     cider
     paredit
-    ;fsharp-mode
-    ))
+    clj-refactor
+    fsharp-mode
+    ac-cider))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -68,6 +72,7 @@
 (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 ;; Enable paredit for Clojure
 (add-hook 'clojure-mode-hook 'enable-paredit-mode)
+(add-hook 'cider-mode-hook 'enable-paredit-mode)
 ;; To create the hook for specific modes, see the following
 ;(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 
@@ -129,8 +134,7 @@
 ;              (local-set-key (kbd "M-.") #'racer-find-definition)
 ;              (local-set-key (kbd "TAB") #'racer-complete-or-indent)))
 
-    ;; scroll one line at a time (less "jumpy" than defaults)
-
+;; scroll one line at a time (less "jumpy" than defaults)
 (defun set-smooth-scrolling (amt)
   (setq mouse-wheel-scroll-amount '(amt ((shift) . amt))) ;; one line at a time
   (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
@@ -138,3 +142,24 @@
   (setq scroll-step amt)) ;; keyboard scroll one line at a time
 ;; Todo: The parameter doesn't seem to do anything
 (set-smooth-scrolling 1)
+
+;; Clojure Autocomplete
+(require 'ac-cider)
+(add-hook 'cider-mode-hook 'ac-flyspell-workaround)
+(add-hook 'cider-mode-hook 'ac-cider-setup)
+(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
+(eval-after-load "auto-complete"
+  '(progn
+     (add-to-list 'ac-modes 'cider-mode)
+     (add-to-list 'ac-modes 'cider-repl-mode)))
+(defun set-auto-complete-as-completion-at-point-function ()
+  (setq completion-at-point-functions '(auto-complete)))
+
+(add-hook 'auto-complete-mode-hook 'set-auto-complete-as-completion-at-point-function)
+(add-hook 'cider-mode-hook 'set-auto-complete-as-completion-at-point-function)
+;; End Clj AC
+
+(provide 'init)
+;;; init.el ends here
+
+
