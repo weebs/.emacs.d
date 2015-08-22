@@ -15,6 +15,8 @@
  )
 
 
+(ido-mode 1)
+
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (global-set-key "\C-x\C-m" 'execute-extended-command)
 
@@ -24,7 +26,7 @@
  '("melpa" . "http://melpa.org/packages/") t)
 
 (package-initialize)
-(package-refresh-contents)
+;(package-refresh-contents)
 (defvar my-packages
   '(nyan-mode
     nyan-prompt
@@ -68,11 +70,6 @@
    (define-key fsharp-mode-map (kbd "M-RET") 'fsharp-eval-region)
    (define-key fsharp-mode-map (kbd "M-SPC") 'fsharp-ac/complete-at-point)))
 
-; Enable Rainbow Delimiters in all programming related modes
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-;; Enable paredit for Clojure
-(add-hook 'clojure-mode-hook 'enable-paredit-mode)
-(add-hook 'cider-mode-hook 'enable-paredit-mode)
 ;; To create the hook for specific modes, see the following
 ;(add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 
@@ -143,15 +140,29 @@
 ;; Todo: The parameter doesn't seem to do anything
 (set-smooth-scrolling 1)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Hooks
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+; ENABLE Rainbow Delimiters in all programming related modes
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+;; Enable paredit for Clojure
+(add-hook 'clojure-mode-hook 'enable-paredit-mode)
+(add-hook 'cider-repl-mode-hook 'enable-paredit-mode)
+(add-hook 'emacs-lisp-mode-hook 'enable-paredit-mode)
+
 ;; Clojure Autocomplete
 (require 'ac-cider)
 (add-hook 'cider-mode-hook 'ac-flyspell-workaround)
 (add-hook 'cider-mode-hook 'ac-cider-setup)
 (add-hook 'cider-repl-mode-hook 'ac-cider-setup)
+(add-hook 'cider-repl-mode-hook 'auto-complete-mode)
+(add-hook 'clojure-mode-hook 'auto-complete-mode)
 (eval-after-load "auto-complete"
   '(progn
      (add-to-list 'ac-modes 'cider-mode)
-     (add-to-list 'ac-modes 'cider-repl-mode)))
+     (add-to-list 'ac-modes 'cider-repl-mode)
+     (add-to-list 'ac-modes 'clojure-mode)))
 (defun set-auto-complete-as-completion-at-point-function ()
   (setq completion-at-point-functions '(auto-complete)))
 
